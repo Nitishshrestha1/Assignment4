@@ -18,9 +18,8 @@ const storage = multer.diskStorage({
 const upload = multer({storage })
 
 app.use(express.json())
-// API route to return the correct image
 app.get("/api/getImage", (req, res) => {
-    const name = req.query.name.toLowerCase();  //name = jerry
+    const name = req.query.name.toLowerCase(); 
 
     let image = "default.jpg";
 
@@ -41,10 +40,9 @@ app.post('/api/upload', upload.single('image'),(req,res) => {
     const filename = `${name}.jpg`;
     const filepath = path.join(__dirname, 'public', filename);
 
-    res.send(req.body);
+    res.status(200).json({status: true, message: `Image is successfully add in ${filepath}`});
 })
 
-// Start server
 app.listen(3000, () => {
     console.log("Server running at http://localhost:3000");
 });
