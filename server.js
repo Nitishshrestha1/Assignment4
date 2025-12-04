@@ -10,7 +10,7 @@ app.use(express.static("public")); // allow images to be served
 
 const storage = multer.diskStorage({
     destination: './public',
-    filename: function (req, file, cb) {
+    filename: (req, file, cb) => {
         return cb(null, `${req.query.name}.jpg`);
     },
 });
@@ -21,14 +21,16 @@ app.use(express.json())
 app.get("/api/getImage", (req, res) => {
     const name = req.query.name.toLowerCase(); 
 
-    let image = "default.jpg";
+    const imagename = `${name}.jpg`
+    const filepath = path.join(__dirname,'public',imagename);
 
-    
-    if (name.includes("tom")) image = "tom.jpg";
-    if (name.includes("jerry")) image = "jerry.jpg";
-    if (name.includes("dog")) image = "dog.jpg";
+    console.log(fs);
 
-    res.json({ url: "/" + image });   
+    if (fs.existsSync(filepath)){
+        return res.status(200).json({url: '/'+imagename})
+    } else {
+        return res.status(200).json({url: "/default.jpg"})
+    }  
 });
 
 app.post('/api/upload', upload.single('image'),(req,res) => {

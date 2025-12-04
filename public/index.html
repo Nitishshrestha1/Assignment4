@@ -15,7 +15,7 @@
 
     <h4 style="margin: 0; margin-bottom: 5px;">Upload an Image</h4>
     <input type="file" id="imageUpload" style="display: block; margin-bottom: 8px;">
-    <input type="text" id="imageName" placeholder="Enter name for file" style="width: 200px; padding: 3px;">
+    <input type="text" id="imageName" placeholder="Enter name for picture" style="width: 200px; padding: 3px;">
     <button onclick="uploadImage()" style="padding: 3px">Upload Image</button>
 
     <br><br>
@@ -29,6 +29,8 @@
 
             //text = jerry
             //localhost:3000/api/getImage?name=jerry
+            document.querySelector("#message").innerHTML = ' ';
+
             fetch(`/api/getImage?name=${encodeURIComponent(text)}`)
             .then(res => res.json())
             .then(data => {
