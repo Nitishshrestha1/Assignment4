@@ -11,6 +11,10 @@
            style="width: 300px; padding: 8px;">
            
     <button onclick="searchImage()" style="padding: 8px;">Show Image</button>
+    <br><br>
+
+    <input type="file" id="imageUpload">
+    <button onclick="uploadImage()" style="padding: 8px">Upload Image</button>
 
     <br><br>
 
@@ -27,6 +31,22 @@
             .then(data => {
                 document.getElementById("imgBox").src = data.url;
             });
+        }
+        async function uploadImage() {
+            let file = document.querySelector('#imageUpload').files[0];
+
+            let formData = new FormData();
+            formData.append('image', file);
+
+            console.log(file);
+            console.log(formData);
+
+            await fetch('/api/upload?name=nitish', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => console.log(data));
         }
     </script>
 
