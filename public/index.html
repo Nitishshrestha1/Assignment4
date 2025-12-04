@@ -13,12 +13,14 @@
     <button onclick="searchImage()" style="padding: 8px;">Show Image</button>
     <br><br>
 
+    <h4 style="margin: 0; margin-bottom: 5px;">Upload an Image</h4>
     <input type="file" id="imageUpload" style="display: block; margin-bottom: 8px;">
     <input type="text" id="imageName" placeholder="Enter name for file" style="width: 200px; padding: 3px;">
     <button onclick="uploadImage()" style="padding: 3px">Upload Image</button>
 
     <br><br>
 
+    <p id="message"></p>
     <img id="imgBox" width="300" style="border: 1px solid #ccc;">
 
     <script>
@@ -45,7 +47,11 @@
                 body: formData
             })
             .then(res => res.json())
-            .then(data => console.log(data));
+            .then(data => {
+                console.log(data);
+                const message = document.querySelector("#message");
+                message.innerHTML = `${filename} has been successfully added`;
+            });
         }
     </script>
 

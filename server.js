@@ -23,6 +23,7 @@ app.get("/api/getImage", (req, res) => {
 
     let image = "default.jpg";
 
+    
     if (name.includes("tom")) image = "tom.jpg";
     if (name.includes("jerry")) image = "jerry.jpg";
     if (name.includes("dog")) image = "dog.jpg";
