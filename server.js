@@ -9,13 +9,16 @@ app.use(express.json());
 app.use(express.static("public")); // allow images to be served
 
 const storage = multer.diskStorage({
-    destination: './public',
+    destination: (req, file, cb) => {
+        cb(null, './public')
+    },
     filename: (req, file, cb) => {
-        return cb(null, `${req.query.name}.jpg`);
+        cb(null, `${req.query.name}.jpg`);
     },
 });
 
-const upload = multer({storage })
+
+const upload = multer({storage})
 
 app.use(express.json())
 app.get("/api/getImage", (req, res) => {
@@ -23,8 +26,6 @@ app.get("/api/getImage", (req, res) => {
 
     const imagename = `${name}.jpg`
     const filepath = path.join(__dirname,'public',imagename);
-
-    console.log(fs);
 
     if (fs.existsSync(filepath)){
         return res.status(200).json({url: '/'+imagename})
@@ -36,7 +37,6 @@ app.get("/api/getImage", (req, res) => {
 app.post('/api/upload', upload.single('image'),(req,res) => {
     const name = req.query.name;
 
-    console.log(name)
     if (!name) return res.status(400).send('Missing ?name=');
     if (!req.file) return res.status(400).send('No file uploaded');
 

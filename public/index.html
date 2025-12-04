@@ -41,6 +41,8 @@
             let file = document.querySelector('#imageUpload').files[0];
             const filename = document.querySelector('#imageName').value;
 
+            if(!filename) return document.querySelector("#message").innerHTML = 'missing file name ';
+
             let formData = new FormData();
             formData.append('image', file);
 
